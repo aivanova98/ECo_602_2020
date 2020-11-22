@@ -53,9 +53,9 @@ anova(fit_species)
 # conditional boxplot for penguin body mass conditioned on both species and sex:
 boxplot(body_mass_g ~ sex * species, data = penguins)
 
-# Q1 Looking at the boxplot we find that there could potentially be an important effect of sex because consistently across the species, male penguins are heavier than their female counterparts when examining the mean of the boxplots. 
+# Q1 Looking at the boxplot we find that there could potentially be an important effect of sex because consistently across the species, male penguins are heavier than their female counterparts when examining the median of the boxplots. 
 
-# Q2 If we add sx as a second factor it improves our model fit. We think that including them gives us more information than either one separately. 
+# Q2 If we add sex as a second factor it improves our model fit. We think that including them gives us more information than either one separately. 
 # Q3 conditional linear model 
 fit_both = lm(body_mass_g ~ sex * species, data = penguins)
 summary(fit_both)
