@@ -1,0 +1,14 @@
+---
+title: "In Class 10/20"
+author: "Ana Ivanova"
+date: "10/20/2020"
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+---
+## Reading a csv file
+
+I'm going to read some data from a csv (comma-separated-values) file.
+
+I can use read.csv() along with the path to the file to read the data into a data.frame.
