@@ -18,9 +18,6 @@ knitr::opts_chunk$set(message = FALSE)
 options(knitr.duplicate.label = TRUE)
 ```
 
-Everything above this line is the header.
-
-
 <!-- The following text won't be displayed in your document.  It tells R how to make nicer looking buttons for your tabbed content. -->
 
 <style type="text/css" rel="stylesheet">
@@ -39,69 +36,45 @@ Everything above this line is the header.
 </style>
 
 
-Use this document as a template to build your final project.
-
-If you've already created the file index.Rmd in your docs folder, you can paste everything below the header into that document.
-
-If you don't yet have an index.Rmd file, save this document as index.Rmd in the docs folder of your main class folder.
-
-Edit this template to fill in your own content.
-
-
 # Introduction
 
-Type a brief introduction here.
+Presented below is a set of functions relating to data structure, numerical data exploration, graphical data exploration, distrbutions, and other kinds of functions as well as examples for how to utilize them! These functions wre introduced in the ECO 602 Analysis of Environmental Data and this document was produced as the final term project for the course. In the second part, I applied some of these main functions to analyze an existing data set. 
 
 
 # Functions 1: Data Structure Functions {.tabset .tabset-pills}
 
-Look at the source code for the final project template, you'll notice the text:
-
-{.tabset .tabset-pills}
-
-This creates tabbed content for all the following sections that are one-level below.
-
-- If you include them on a primary header (one #), all of the subsequent secondary headers will in tabs.
-
-
-
-
 ## `c()`
 
-The following is the markdown text needed to reproduce my code example for `c()`:
+The first fundemental function is the `c()` function which *combines* or *concatenates* arguments into a vector. A vector is defined as a 1-dimensional data structure that consists of atleast 1 element.
 
+In order to produce a successful vector, all of the elements must be of the same *type* meaning I can't combine character and numeric types in the same call to `c()`
 
-The function `c()` *combines* or *concatenates* its arguments into a vector (a 1-dimensional data structure consisting of 1 or more elements).
-
-- All of the elements must be of the same *type*.
-  - I can't combine character and numeric types in the same call to `c()`
-
-Here's two examples using numeric and character data types:
+Below I present two examples for creating vectors. One will use numeric data and the other will use character data:
 
 ```{r}
-# Create a vector of numbers:
-num_vec  = c(1, 4, 8, 9, 13)
+# Creating a vector with numerical data:
+num_vec  = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 
-# Create a vector of characters:
-char_vec = c("a", "fish", "data is cool")
+# Creating a vector with character data:
+char_vec = c("strawberry", "blueberry", "raspberry")
 ```
 
-I can show the contents of a vector by typing the name of the vector, or using the `print()` function.
+In order to show the contents of a vector, I need to type the name of the vector or use the `print()` function.
 
-```{r}
-# Typing the name of the vector into the console prints the contents
+```{r creating vectors}
+# Here is an example of how typing the name of one of my vectors (num_vec) prints the contents
 num_vec
 
-# The print() function accomplishes the same task:
-print(char_vec)
+# I can do the same thing using the print() function
+print(num_vec)
 ```
 
 ## `data.frame()`
 
 You can build a data frame from scratch by using the `data.frame` function 
 
-```{r}
-# Building the data frame that will include character data in quotations and numeric data 
+```{r building a data frame}
+# Building a data frame that will include character data (in quotations) and numeric data 
 
 dat_1 = data.frame(letters = c("A", "B", "C"), numbers = c(1, 2, 3))
 
@@ -111,13 +84,13 @@ dat_1
 
 ```
 
-How to subset a data frame 
+You can also subset a data frame using a variety of different methods. 
 
 - If you know the name of the column, you can use $
 
-```{r data_frame_example_1}
+```{r subset1}
 
-# How to subset a data frame if i know the name of the column i'm interested in using the $ symbol. In this example I am subsetting the column called "letters"
+# In this example I am subsetting the column called "letters" from the dat_1 dataframe
 
 dat_1$letters
 
@@ -125,15 +98,15 @@ dat_1$letters
 
 - If I want to select certain things from columns and rows I can use the `[]` function
 
-```{r}
-# How to subset a data frame if I want to pick out specific rows and columns. The rows selection will come before the comma and the column selection will come after the comma. In this case I would like to select rows 1 and 2 from column 2. I can do that like so:
+```{r subset2}
+# The rows selection will come before the comma and the column selection will come after the comma. In this example I would like to select what falls in rows 1 and 2 from column 2. 
 
 dat_1[1:2,2]
 ```
 
 - You can also subset using a specific function called `subset()` which acts as a shortcut to getting the job done
 
-```{r}
+```{r subset3}
 # Here is an example of subsetting using the `subset()` function. I am interested in selecting all the rows where the "numbers" column has a value less than 3. In the first argument of the function I will specify the data set from which I want to subset. In the second argument, I put in the conditions and the information I need to make the selection. 
 
 subset(dat_1, subset = numbers < 3)
@@ -148,7 +121,8 @@ I will first show a simple example of constructing a matrix in R. For this examp
 - `Byrow` is a function that tells R that the matrix is filled either by columns or rows. In this case, I want my matrix to be filled by rows so I will write TRUE. However, if I wanted to fill my matrix by columns I would have written FALSE. 
 - The function `nrow` specifies how many rows you want to use, which in this case I specified as 5.
 
-```{r}
+```{r matrix1}
+# Here is my example of constructing a matrix of the numbers 1-20 split into 5 rows
 
 matrix(1:20, byrow = TRUE, nrow = 5)
 
@@ -157,7 +131,7 @@ matrix(1:20, byrow = TRUE, nrow = 5)
 Similarly, I can construct matrices out of vectors! 
 
 
-```{r}
+```{r matrix2}
 # For example, if I wanted to build a matrix of vector data for three different bird species. I would first create my vectors. In each vector, I want to include the species sex and color of beak.
 
 Bird_1 = c("female", "yellow")
@@ -180,9 +154,9 @@ bird_data_matrix
 
 I can also modify my matrix to look nice by adding names to the columns and rows 
 
-```{r}
+```{r matrix3}
 
-# For example If I want to name my columns as sex and color of beak I can use 'colnames' and to name my rows as individual bird species I can use 'rownames`. First I need to create the vectors for the headings of the columns and rows:
+# For example if I want to name my columns as sex and color of beak I can use 'colnames' and to name my rows as individual bird species I can use 'rownames`. First I need to create the vectors for the headings of the columns and rows:
 
 attribute <- c("sex", "beak color")
 species_number <- c(1, 2, 3)
@@ -202,16 +176,15 @@ bird_data_matrix
 
 The `length()` function can be used in R to get the length of a vector or set it 
 
-```{r}
-# If I want to get the length of a vector, such as the "num_vec" vector I created earlier in my vector example I can use the `length() function 
+```{r length}
+# If I want to get the length of a vector, such as the "num_vec" vector I created earlier in my vector example I can use the `length()` function: 
 
 length(num_vec)
 
-# If I wanted to set my vector length to be only the first 3 values instead of 5, I can also specify that using the `num_vec` function and printing the vector to see what I created. 
+# If I wanted to set my vector length to be only the first 3 values instead of 10, I can also specify that using the `length()` function and printing the vector to see what I created: 
 
 length(num_vec) <- 3
 num_vec
-
 ```
 
 
@@ -219,8 +192,8 @@ num_vec
 
 The `nrow()` function can be used to get dimensions of a data frame. Specifically, it will tell you the number of rows present in the object you are interested in 
 
-```{r}
-# Here is an example of how to use the function `nrow()` on a data frame that I created earlier called dat_1 
+```{r nrow_function}
+# Here is an example of how to use the function `nrow()` on a data frame that I created earlier called dat_1:
 
 nrow(dat_1)
 ```
@@ -230,20 +203,21 @@ nrow(dat_1)
 
 The `ncol()` function can be used to get dimensions of a data frame. Specifically, it will tell you the number of columns present in the object you are interested in 
 
-```{r}
-# Here is an example of how to use the function `ncol` on a data frame that I created earlier called dat_1
+```{r ncol_function}
+# Here is an example of how to use the function `ncol()` on a data frame that I created earlier called dat_1:
 
 ncol(dat_1)
 ```
 
 ## `dim()`
 
-The `dim()` function in R can be used to retrieve or set the dimension of an object. Using the `dim()` function to retrieve the dimensions of an object such as a data frame, a matrix or an array. The output of the function will first report the number of rows and then the number of columns.
-```{r}
-# Here's an example of using the `dim()` function on the dat_1 data frame I ceated earlier
+The `dim()` function in R can be used to retrieve or set the dimension of an object. Use the `dim()` function to retrieve the dimensions of an object such as a data frame, a matrix or an array. The output of the function will first report the number of rows and then the number of columns.
+```{r dimfunction}
+# Here's an example of using the `dim()` function on the dat_1 data frame I created earlier:
+
 dim(dat_1)
 
-#Here's an example of using the `dim()` function on the bird_data_matrix I created earlier
+#Here's an example of using the `dim()` function on the bird_data_matrix I created earlier:
 
 dim(bird_data_matrix)
 ```
@@ -253,14 +227,18 @@ dim(bird_data_matrix)
 
 ## `summary()`
 
-The `summary()` function produces result summaries
+The `summary()` function produces result summaries (of various model fitting functions). 
 
-```{r}
+The kind of information you receive back from using this function depends on the class of the arguments. For matrices and data frames, you will see summaries for each column. 
 
-# I can use the `summary()` function on a data frame to get a summary of the characteristics of the data Since my data frame consists of vectors with numeric and character data, I will have an output column pertaining to each 
+```{r Summaryexample}
+
+# I can use the `summary()` function on a data frame to get a summary of the characteristics of the data. Since my data frame consists of vectors with numeric and character data, I will have an output column pertaining to each:
+
 summary(dat_1)
 
-# Here is another example of using the `summary()` function but on a matrix. The output will look slightly different from the data frame and tell me abut the data of each column of my matrix. 
+# Here is another example of using the `summary()` function but on a matrix. The output will look slightly different from the data frame because I do not have numeric data so all the information will pertain to character data in my columns:
+
 summary(bird_data_matrix)
 ```
 
@@ -270,7 +248,7 @@ The `mean()` function is the generic function to calculate the arithmetic mean.
 
 - You can calculate the mean of a set of values by putting those values into a vector and taking the mean of the vector
 
-```{r}
+```{r mean_example1}
 # Taking the mean of a vector
 
 mean(c(1,2,3,4,5,6,7,8))
@@ -278,38 +256,22 @@ mean(c(1,2,3,4,5,6,7,8))
 
 - You can also subset a column of an existing data frame and calculate the mean of that column 
 
-```{r}
-# A simple mean calculation for the numbers vector of the dat_1 data frame that was created earlier. To subset the number vector, I simply used the $ function introduced earlier. 
+```{r mean_example2}
+# A simple mean calculation for the numbers vector of the dat_1 data frame that was created earlier is presented below. To subset the number vector, I simply used the $ function introduced earlier. 
 
 mean(dat_1$numbers)
-```
-
-- You can also add additional arguments to the `mean()` function such as na.rm which tells R whether or not you want to strip null values before proceeding with the computation 
-
-```{r}
-
-# An example of including the na.rm argument in the `mean()` function
-
-mean(dat_1$numbers, na.rm = TRUE)
 ```
 
 ## `sd()`
 
 The `sd()` function can be used to compute the standard deviation of the values in the object you designate. 
 
-```{r}
+```{r SD_example}
 # An example of calculating the standard deviation on the numbers vector in the dat_1 data frame
 
 sd(dat_1$numbers)
 ```
 
-I can also specify whether or not I want to remove missing values if I had them using the na.rm argument 
-
-```{r}
-# Here is an example of how to specify removing missing values from a standard deviation calculation
-
-sd(dat_1$numbers, na.rm = TRUE)
-```
 
 # Functions 3: Graphical Data Exploration {.tabset .tabset-pills}
 
@@ -327,7 +289,7 @@ data(iris)
 
 head(iris)
 
-# Now I can create a basic scatter plot Using formula notation to plot sepal length versus sepal width and identify patterns:
+# Now I can create a basic scatter plot using formula notation to plot sepal length versus sepal width and identify patterns:
 
 plot(Sepal.Length ~ Sepal.Width, data = iris)
 
@@ -341,7 +303,7 @@ I can also customize my scatter plot to contain a variety of additional features
 
 - I can specify the color of my points using the `col =` argument
 
-```{r}
+```{r color, fig.asp = 1.0}
 
 # Specifying the color of points to red 
 
@@ -349,9 +311,9 @@ plot(Sepal.Length ~ Sepal.Width, data = iris, col = "red")
 
 ```
 
-- I can specify the symbol type for my plot using the `pch =` argument. You can write in any number between 1 and 25. What each number stands for can be found online on the R website. As an example I will include a couple symbol types as an example below.     
+- I can specify the symbol type for my plot using the `pch =` argument. You can write in any number between 1 and 25. What each number stands for can be found online on the R website. As an example I will include a couple symbol types below.     
 
-```{r}
+```{r shape, fig.asp = 1.0}
 
 #  If I want to use filled in circles as my symbol 
 
@@ -369,7 +331,7 @@ plot(Sepal.Length ~ Sepal.Width, data = iris, pch = 15)
 
 - I can add a title for my plot using the `main =` argument 
 
-```{r}
+```{r title, fig.asp = 1.0}
 
 # Adding a main title for the plot
 
@@ -377,9 +339,9 @@ plot(Sepal.Length ~ Sepal.Width, data = iris, main = "Comparing Iris sepal lengt
 
 ```
 
-- I can add a label for my x axis using the `xlab =` argument 
+- I can add a label for my x-axis using the `xlab =` argument 
 
-```{r}
+```{r xlabel, fig.asp = 1.0}
 
 # Adding an x-axis label 
 
@@ -389,7 +351,7 @@ plot(Sepal.Length ~ Sepal.Width, data = iris, xlab = "Sepal Width of Iris")
 
 - I can add a label for my y axis using the `ylab =` argument 
 
-```{r}
+```{r ylabel, fig.asp = 1.0}
 
 # Adding a y-axis label 
 
@@ -397,36 +359,37 @@ plot(Sepal.Length ~ Sepal.Width, data = iris, ylab = "Sepal Length of Iris")
 
 ```
 
-- I can also specify the magnification of my points/symbols or also my labels 
+- I can also specify the magnification of my points/symbols or also my labels using the `cex =` argument
 
-```{r}
+```{r magnification, fig.asp = 1.0}
 
 # Magnifying the size of my points by 3
 
 plot(Sepal.Length ~ Sepal.Width, data = iris, cex = 3)
 
-# Magnifying the size of my main title by 2 (using the `cex.main =` argument)
+# Magnifying the size of my main title by 2 using the `cex.main =` argument
 
 plot(Sepal.Length ~ Sepal.Width, data = iris, main = "Comparing Iris Sepal Length and Width", cex.main = 2)
 
-# Magnifying the size of my axis labels by 2 (using the `cex.axis =` argument)
+# Magnifying the size of my axis labels by 2
 
 plot(Sepal.Length ~ Sepal.Width, data = iris, xlab = "Sepal Width of Iris", ylab = "Sepal Length of Iris", cex.lab = 2)
 ```
 
-- I can establish a limit for my x axis 
+- I can also establish a limit for my x-axis using the `xlim =` argument
 
-```{r}
 
+```{r limitsx, fig.asp = 1.0}
 # Adding a limit for the x axis by specifying a range such as 1 to 6
 
 plot(Sepal.Length ~ Sepal.Width, data = iris, xlim = range(1:6))
 
 ```
 
-- I can establish a limit for my y axis 
 
-```{r}
+- I can establish a limit for my y axis using the `ylim =` argument
+
+```{r limitsy, fig.asp = 1.0}
 
 # Adding a limit for the y axis by specifying a range such as 1 to 10 
 
@@ -438,7 +401,7 @@ plot(Sepal.Length ~ Sepal.Width, data = iris, ylim = range(1:10))
 
 I can use boxplots to quickly visualize my data. In R I can make a simple boxplot using the `boxplot()` function
 
-```{r}
+```{r simple_boxplot, fig.asp = 1.0}
 
 # Creating a boxplot of the sepal width of the iris data. I can do that by subsetting the iris data using the `$` symbol.
 
@@ -448,7 +411,7 @@ boxplot(iris$Sepal.Width)
 
 I can also create a conditional boxplot conditioned by some categorical variable 
 
-```{r}
+```{r conditional_boxplot, fig.asp = 1.0}
 
 # Creating a conditional boxplot using the categorical variable species. This enables me to see sepal width of iris plants conditioned by the specific species. 
 
@@ -461,7 +424,7 @@ boxplot(Sepal.Width ~ Species, data = iris)
 
 I can create a histogram of data I am interested by using the `hist()` function in R
 
-```{r}
+```{r hist, fig.asp = 1.0}
 
 # An example of creating a basic histogram of the iris sepal lengths  
 
@@ -471,7 +434,7 @@ hist(iris$Sepal.Length)
 
 I can also specify the breaks for my histogram using the `breaks =` argument 
 
-```{r}
+```{r hist2, fig.asp = 1.0}
 
 # Here is an example of me specifying the breaks
 
@@ -483,7 +446,7 @@ hist(iris$Sepal.Length, breaks = 0:10)
 
 I can also put many plots together on one page so I can easily compare them using the `par()` function and the `mfrow =` argument  
 
-```{r}
+```{r join}
 
 # Here is an example of me placing my basic histogram of the iris sepal length and my basic scatter plot comparing the iris sepal length and width side by side for comparison. 
 
@@ -493,22 +456,64 @@ plot(Sepal.Length ~ Sepal.Width, data = iris)
 
 ```
 
-
-# Functions 4: Distribution Functions {.tabset .tabset-pills}.
+# Functions 4: Distribution Functions {.tabset .tabset-pills}
 
 ## dnorm()
 
-To calculate the probability density function, you can use the `dnorm()` function. The `dnorm()` function can be used with discrete parametric distribution and allows you to answers questions like which value is more likely.
+To calculate the probability density function, you can use the `dnorm()` function. The `dnorm()` function can be used with continuous data and allows you to answers questions like which value is more likely. The function is the height of the curve and it can give us a relative sense of the likelihood. 
 
- 
+```{r}
+
+# To determine whether a value of 1.2 or 2.4 is more likely in a distribution with mean of 2 and standard deviation 2, we can first create a vector with both of those values and then using it within the `dnorm()` function:
+
+nums <- c(1.2, 2.4)
+
+dnorm(nums, mean =2, sd = 2)
 ```
 
-
 ## pnorm()
+
+The `pnorm()` function is the cumulative density function and enables you to answer questions about continous distributions. Using this function you could determine what the probability is of observing a value between x and y or what is the probability of observing a value less than/more than z. 
+
+```{r}
+# Here is an example of using the pnorm function to answer the question: what is the probability of observing a value of less than 1.2 from a normally-distributed population with mean of 2 and standard deviation of 2.
+
+pnorm(1.2, mean = 2, sd = 2, lower.tail = TRUE, log.p = FALSE)
+
+# If we were interested in measuring the probability of observing a value more than 1.2, we could simply subtract our previous answer from 1. 
+
+Lower <- pnorm(1.2, mean = 2, sd = 2, lower.tail = TRUE, log.p = FALSE)
+Upper <- 1 - Lower
+
+# Now we print out results
+
+Upper 
+
+# Now lastly, if I was interested in calculating the probability of observing a value between 1.2 and 3.2 from a normally-distributed population with mean = 2 and standard deviation = 2, I will need to first calculate the separate probabilities of observing less than 1.2 and less than 3.2 and then subtract their differences. 
+
+A <- pnorm(1.2, mean = 2, sd = 2, lower.tail = TRUE, log.p = FALSE)
+A
+B <- pnorm(3.2, mean = 2, sd = 2, lower.tail = TRUE, log.p = FALSE)
+B
+C <- B-A
+C
+
+```
+
 ## qnorm()
+
+The `qnorm()` function is the quantile function for a continuous distribution. 
+
+```{r}
+
+# This is an example of how to use the `qnorm()` function to find the 80th percentile of  normal distribution whose mean is 50 and whose standard deviation is 2:
+
+qnorm(0.8, mean = 50, sd =1, lower.tail = TRUE, log.p = FALSE)
+```
+
 ## dbinom()
 
-The `dbinom()` function is the probbility mass function when working with discrete parametric distributions. It enables us to answer questions like what is the probability I observe a value of exactly x.
+The `dbinom()` function is the probability mass function when working with discrete parametric distributions. It enables us to answer questions like what is the probability I observe a value of exactly x.
 
 ```{r}
 
@@ -520,24 +525,51 @@ dbinom(3, 4, 0.75, log=FALSE)
 
 ## pbinom()
 
-The `pbinom()` function can 
+The `pbinom()` function is the cumulative mass function when working with discrete parametric distributions. It enables you to answers questions such as what is the probability that I observe a value of X or more? OR what is the probability that I observe a value of X or less. 
+
+```{r}
+# Here is an example of calculating the probability of observing a count of 3 successes or fewer in a binomial distribution with parameters n=4 and p=0.75 
+
+pbinom(3, 4, 0.75, log=FALSE)
+
+# Here is an example of calculating the probability of observing more than 3 successes in a binomial distribution with parameters n=4 and p=0.75. First we need to calculate the probability of observing a count of 3 successes or fewer like we did above and print that information. 
+
+Less_than <- pbinom(3, 4, 0.75, log=FALSE)
+Less_than
+
+# Now we can calculate the probability of observing more than 3 successes by subtracting from 1 our answer
+More_Than <- 1- Less_than
+More_Than
+
+```
+
 
 ## qbinom()
+
+The function `qbinom()` is a quantile function that can be used for discrete parametric distributions. 
+
+```{r}
+
+# Here is an example of using the `qbinom()` function to calculate the 10th quantile of a distribution with 20 trials and a success of each trial being .5
+
+qbinom(.10, size = 20, prob = .5, lower.tail = TRUE, log.p = FALSE)
+```
 
 
 # Functions 5: Other Functions {.tabset .tabset-pills}
 
 ## subset()
 
+I can subset data using the `subset()` function. The first argument that goes in is the name of the data frame. The second is the condition you want to subset.
 
-```{r}
+```{r subsetting}
 
 
-# I can subset data using the `subset()` function. The first argument that goes in is the name of the data frame. The second is the condition you want to subset. Earlier I created a data frame called "dat_1" and I will use that as an example here. Let's say I am interested in subsetting all numbers less than 3, my code would look like this:
+# Earlier I created a data frame called "dat_1" and I will use that as an example here. Let's say I am interested in subsetting all numbers less than 3, my code would look like this:
 
 subset(dat_1, subset = numbers < 3)
 
-# Now let's say i want to pick out all of the numbers than are more than 0. My code would look like this:
+# Now let's say I want to pick out all the rows where the numbers are more than 0. My code would look like this:
 
 subset(dat_1, subset = numbers > 0)
 
@@ -555,7 +587,7 @@ one the package is installed, the user can now load the package into R's environ
 
 - Using `require()`
 
-```{r}
+```{r require}
 
 require(palmerpenguins)
 
@@ -563,7 +595,7 @@ require(palmerpenguins)
 
 - Using `library()`
 
-```{r}
+```{r library}
 
 library(palmerpenguins)
 
@@ -573,7 +605,7 @@ library(palmerpenguins)
 
 We can use the `read.csv()` function to read data files and create a data frame from it. One simple way to work with csv files on your computer is to first download and install the `here` package from R which allows you to simply locate files on your computer. 
 
-```{r}
+```{r csvs}
 
 # Reading the package into R's environment using the `require()` function followed by the location of the csv file. On this computer, the csv file has been downloaded and placed in a folder called "data". 
 
@@ -584,14 +616,16 @@ here("data", "hab.sta (2).csv")
 
 dat_habitat <- read.csv(here("data", "hab.sta (2).csv"))
 
-# Viewing the data frame containing the csv
+# Preview the data frame containing the csv
 
-dat_habitat
+head(dat_habitat)
 ```
 
-# Part 2: Data Anaylsis
+# Part 2: Data Anaylsis 
 
-## Numerical Exploration 
+## Data Exporation {.tabset .tabset-pills}
+
+### Numerical Exploration 
 
 Putting the delomy data set into a dataframe 
 
@@ -600,11 +634,16 @@ Putting the delomy data set into a dataframe
 require("here")
 here("data", "delomys.csv")
 dat_delomys <- read.csv(here("data", "delomys.csv"))
-dat_delomys
 
 ```
 
-Using `summary()` n body mass and body length data columns to display summary statistics 
+Previewing the delomy data with the `head()` function
+
+```{r}
+head(dat_delomys) 
+```
+
+Using `summary()` on body mass and body length data columns to display summary statistics 
 
 ```{r}
 
@@ -618,7 +657,7 @@ summary(dat_delomys$body_length)
 
 Performing a test of normality on the body mass and length columns using the `shapiro.test()`
 
-```{r}
+```{r shapirotest}
 # Shapiro test on body mass
 
 shapiro.test(dat_delomys$body_mass)
@@ -628,11 +667,11 @@ shapiro.test(dat_delomys$body_mass)
 shapiro.test(dat_delomys$body_length)
 ```
 
-## Graphical Exploration 
+### Graphical Exploration 
 
 Scatterplot of body mass and body length 
 
-```{r}
+```{r analysis1, fig.asp = 1.0}
 
 plot(body_mass ~ body_length, data = dat_delomys)
 
@@ -640,7 +679,7 @@ plot(body_mass ~ body_length, data = dat_delomys)
 
 Histogram of body mass
 
-```{r}
+```{r analysis2, fig.asp = 1.0}
 
 hist(dat_delomys$body_mass)
 
@@ -648,7 +687,7 @@ hist(dat_delomys$body_mass)
 
 Histogram of body length 
 
-```{r}
+```{r analysis3, fig.asp = 1.0}
 
 hist(dat_delomys$body_length)
 
@@ -656,36 +695,37 @@ hist(dat_delomys$body_length)
 
 Conditional boxplot of body mass conditioned on species
 
-```{r}
+```{r analysis4, fig.asp = 1.0}
 
 boxplot(body_mass ~ binomial, data = dat_delomys)
 ```
 
 Conditional boxplot of body mass conditioned on sex 
 
-```{r}
+```{r analysis5, fig.asp = 1.0}
 
 boxplot(body_mass ~ sex, data = dat_delomys)
 ```
 
 Conditional boxplot of body mass, conditioned on both species and sex 
 
-```{r}
+```{r analysis6, fig.asp = 1.0}
 
-boxplot(body_mass ~ binomial*sex, data = dat_delomys)
+boxplot(body_mass ~ binomial*sex, data = dat_delomys, names = c("Dorsalis(F)", "Sublineatus(F)", "Dorsalis(M)", "Sublineatus(M)"))
 ```
 
 Questions to answer:
 
-- Qualitatively describe the relationship between body mass and length. Does the relationship seen linear, curved or nonexistent? ANSWER: From examining the scatterplot of body amss and body length, the relationship appears lnear with the exception of some outliear found for species with body lengths more than 200. 
+- Qualitatively describe the relationship between body mass and length. Does the relationship seen linear, curved or nonexistent? ANSWER: From examining the scatterplot of body mass and body length, the relationship appears linear with the exception of some outliers found for species with body lengths more than 200. 
 
-- Qualitatively describe the shapes of the histograms. Do the data appear normally-distributed? ANSWER: From examining the histogram of the body mass, it appears that body mass is normally distributed. Normally distributed data is when we see relative symmetry around the mean. Data that is found near the mean appears more frequent in the data set and the frequency decreases the farther from the mean we get. Similarly, body length also seems to be normally distributed however there is skewness toward body length that is more of equal to 100. 
+- Qualitatively describe the shapes of the histograms. Do the data appear normally-distributed? ANSWER: From examining the histogram of the body mass, it appears that body mass is normally distributed maybe slightly right skewed. Normally distributed data is when we see relative symmetry around the mean. Data that is found near the mean appears more frequent in the data set and the frequency decreases the farther from the mean we get. Similarly, body length also seems to be normally distributed however there is skewness toward body lengths that are more or equal to 100. 
 
-- Using both the histograms and normality tests do you think the (unconditioned) body masses and body length are normally-distributed? ANSWER: The shapiro test hypothesis is that the data re drawn from a normally-distributed population. Examining the results of the shapiro test on the body length and body mass columns, both p vaues are incredibly small (less than an alpha level of 0.05) meaning we can reject this null. The unconditioned body mass and body lengths are not normally distributed. This is contrary to how the data visually looks as both the histograms of body mass and body lengths appear relatively normally distributed. 
+- Using both the histograms and normality tests do you think the (unconditioned) body masses and body length are normally-distributed? ANSWER: The shapiro test hypothesis is that the data are drawn from a normally-distributed population. Examining the results of the shapiro test on the body length and body mass columns, both p-values are incredibly small (less than an alpha level of 0.05) meaning we can reject this null. The unconditioned body mass and body lengths are not normally distributed. This is contrary to how the data visually looks as both the histograms of body mass and body lengths appear relatively normally distributed. 
 
-- ANSWER: When examining this conditional boxy plot of body mass conditioned on sex, it appears as though the Delomys dorsalis species are heavier than the Delomys sublineatus species.For the boxplots of body mass conditioned on sex, it appears that females and males are almost the same weight with males jsut beigh slightly heavier (median is slightly higher than for the females). When we look at the boxplot containing the body mass conditioned on both species and sex, we see a clearer picture. The Delomys Dorsalis female species are heavier than the Delomys sublineatus species, and the Delomys dorsalis male species are heavier than the Delomys sblineatus species. Males are not necessarily heavier than females and it varies across species. For example, the Dellomys dorsalis female is heavier than the delomys sublineatus male. 
+- Examine the conditional boxplots. Describe any graphical evidence you see for body mass differences based on species and/or sex. ANSWER: When examining this conditional box plot of body mass conditioned on species, it appears as though the Dorsalis species are generally heavier than the sublineatus species. For the boxplots of body mass conditioned on sex, it appears that females and males are almost the same weight with males just being slightly heavier (median is slightly higher than for the females). When we look at the boxplot containing the body mass conditioned on both species and sex, we see a clearer picture. The Dorsalis female species are heavier than the Sublineatus female species, and the Dorsalis male species are heavier than the Sublineatus male species. In general the Dorsalis species are heavier than the Sublineatus species and maes are just slightly heavier than females. 
 
-## Model Building 
+## Model Building {.tabset .tabset-pills}
+### Model Building 
 
 ```{r}
 
@@ -705,7 +745,7 @@ fit5
 
 ```
 
-## Model Diagnostics
+### Model Diagnostics
 
 Checking to see whether our models fit the assumption of normality of the residuals using the graphical approach 
 
@@ -737,11 +777,11 @@ shapiro.test(fit5res)
 
 Answers to questions:
 
-What do you conclude about residual normality based on the numerical and graphical diagnostics? ANSWER: Residual are not normal across all models
+What do you conclude about residual normality based on the numerical and graphical diagnostics? ANSWER: Residual are not normally distributed across all models based on the results of the shapiro test. Even though the histograms appear that the residuals are normally distributed, the results of our shapiro test point other wise (very low p-values, ess than an alpha value of 0.05). 
 
 Are violations of the normality assumptions equally severe for all the models? ANSWER: The p values are not identical for all five models however all p values are substantially less than the alpha value of 0.05. The lowest p value is observed for model 1 with a p value of 2.2e-16 and the highest is for model 2 (0.0001541). 
 
-## Model intepretation 
+### Model intepretation 
 
 Printing out coefficient table
 
@@ -767,17 +807,18 @@ knitr::kable(anova(fit5))
 
 ```
 
-# Body Length 
+## Model Interpretation {.tabset .tabset-pills}
+### Body Length 
 
 Body length Questions:
 
 What is the magnitude of the mass/length relationship? ANSWER: The magnitude of the relationship is the slope which is 0.8754988
 
-What is the expected body length of an animals that weighs 100g? ANSWER: It would be 163.674536
+What is the expected body length of an animals that weighs 100g? ANSWER: It would be 163.674536cm
 
-What is the expected body length of an animal that weighs 0g? ANSWER: This would be the intercept which is 76.1246565
+What is the expected body length of an animal that weighs 0g? ANSWER: This would be the intercept which is 76.1246565cm
 
-# Body Mass: Model Coefficients 
+### Body Mass: Model Coefficients 
 
 Body mass questions:
 
@@ -789,15 +830,15 @@ Which sex is heavier? ANSWER: male
 
 Which species is heavier? ANSWER: Delomys dorsalis
 
-# Body Mass: ANOVA
+### Body Mass: ANOVA
 
 ANOVA related questions:
 
-Are sex and species significant predictors for body mass? ANSWER: Yes, the p value is smaller than the alpha value of 0.05
+Are sex and species significant predictors for body mass? ANSWER: Yes, the p-values are smaller than the alpha value of 0.05
 
 Is there a significant interaction? ANSWER: There is not a significant interaction 
 
-Does the significance (as measured by p-value) of either of the main effects (sex and species) differ much between the single-predictor models, the additive models, and the interactive models? ANSWER: They do not
+Does the significance (as measured by p-value) of either of the main effects (sex and species) differ much between the single-predictor models, the additive models, and the interactive models? ANSWER: They do not. In both the p-values are significantly less than an alpha value of 0.05 and in general, the p-value is relatively close for sex across the additive and interactive models and the same thing for species. 
 
 ## Model Comparison: Body Mass
 
@@ -816,6 +857,6 @@ Questions regarding the AIC values for the four body mass models
 
 Which two models have the lowest AIC? ANSWER: Model 4 (12896.73) and Model 5 (12898.72)
 
-Which of the two models with lowest AIC scores would you select? Both model 4 and Model 5 have low AIC scores however Model 4 is an additive model and Model 5 is a factorial model that considers interactions. 
+Which of the two models with lowest AIC scores would you select? ANSWER: Both model 4 and Model 5 have low AIC scores however Model 4 is an additive model and Model 5 is a factorial model that considers interactions. I would choose the additive model. The interaction between them is not an important factor making the difference. There is a high p-value for the interaction term (not significant) so it wouldn't be deciding for the model and therefore, we can use a simpler model (the additive model) to explain the data.  
 
 
